@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 // let TODOS = [];
 
-export const useTodos = () => {
+export const useTodos = (url = 'https://jsonplaceholder.typicode.com/todos') => {
   const [isLoading, setIsLoading] = useState(true);
   const [todos, setTodos] = useState([]);
 
@@ -13,7 +13,7 @@ export const useTodos = () => {
 
     setIsLoading(true);
 
-    fetch('https://jsonplaceholder.typicode.com/todos', { signal})
+    fetch(url, { signal})
       .then((response) => response.json())
       .then((data) => {
         setTodos(data);
@@ -25,7 +25,7 @@ export const useTodos = () => {
     return () => {
       controller.abort();
     }
-  }, []);
+  }, [url]);
 
   return { isLoading, todos };
 }

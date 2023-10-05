@@ -22,46 +22,26 @@ const handleClick = () => {
 const Counter = ({ isVisible, url }) => {
   const [counter, setCounter] = useState(0);
 
+
+  const [visible, setVisible] = useState(isVisible);
+
+  useEffect(() => {
+    setVisible(isVisible);
+  }, [isVisible]);
+
   const { isLoading, todos } = useTodos();
-  
+
   useClickListener();
 
   console.log('Counter', { isLoading, todos });
 
-  // const callback = () => {
-  //   console.log('Counter mounted')
-  // }
-
-  // useEffect(() => {
-  //   console.log('Counter mounted', isVisible);
-  //   return () => {
-  //     console.log('Counter unmounted', isVisible);
-  //   }
-  // }, [isVisible]);
-
-  // useEffect(() => {
-  //   const id = setInterval(() => {
-  //     console.log('Counter interval');
-  //   }, 1000);
-  //
-  //   console.log('Counter id - mounted', {id});
-  //   return () => {
-  //     clearInterval(id);
-  //     console.log('Counter id - unmounted', {id});
-  //   }
-  // }, []);
-  // useInterval();
-
-  // useEffect(() => {
-  //   console.log('Counter mounted', counter);
-  //   fetch(url)
-  // }, [url]);
-
   return (
     <Box>
-      {isLoading ? <p>Loading...</p> : <ul>{todos.map((todo) => {
-        return <li key={todo.id}>{todo.title}</li>
-      })}</ul>}
+      {isLoading ?
+        <p>Loading...</p>
+        : <ul>{todos.map((todo) => {
+          return <li key={todo.id}>{todo.title}</li>
+        })}</ul>}
       <h2>Counter {counter}</h2>
       <Button onClick={() => setCounter(counter + 1)}>Increment</Button>
     </Box>
