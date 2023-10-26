@@ -3,12 +3,14 @@ import type { LoaderFunction } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import JsonPlaceholderAPI from '~/api/JsonPlaceholderAPI/JsonPlaceholderAPI';
 
-export const loader = async ({ request: { signal } }: Parameters<LoaderFunction>[number]) => {
-  return await JsonPlaceholderAPI.getUsers({ signal })
-}
+export const loader = async ({
+  request: { signal },
+}: Parameters<LoaderFunction>[number]) => {
+  return await JsonPlaceholderAPI.getUsers({ signal });
+};
 
 export default function UsersPage() {
-  const users = useLoaderData<typeof loader>()
+  const users = useLoaderData<typeof loader>();
 
   return (
     <>
@@ -23,5 +25,5 @@ export default function UsersPage() {
         ))}
       </List>
     </>
-  )
+  );
 }
