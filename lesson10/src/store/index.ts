@@ -8,6 +8,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist'
+import { apiSlice } from './jsonPlaceholder';
 import { tasksSlice } from './tasks';
 import { themeSlice } from './theme';
 
@@ -23,6 +24,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   theme: themeSlice.reducer,
   tasks: tasksSlice.reducer,
+  [apiSlice.reducerPath]: apiSlice.reducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -34,7 +36,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(apiSlice.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
