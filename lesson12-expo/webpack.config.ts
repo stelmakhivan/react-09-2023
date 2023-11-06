@@ -6,25 +6,29 @@ module.exports = async function (env: Environment, argv: Arguments) {
     {
       ...env,
       babel: {
-        dangerouslyAddModulePathsToTranspile: ["nativewind"],
+        dangerouslyAddModulePathsToTranspile: ['nativewind'],
       },
     },
     argv,
   );
 
-  config.module?.rules?.push({
-    test: /\.css$/i,
-    use: ["postcss-loader"],
-  });
+  if (config.module?.rules) {
+    config.module.rules = [
+      ...config.module.rules,
+      {
+        test: /\.css$/i,
+        use: ['postcss-loader'],
+      },
+    ]
+  }
 
   if (config.resolve?.alias) {
     config.resolve.alias = {
       ...config.resolve.alias,
-      "@/*": "./src/*",
-      "@/components/*": "./src/components/*"
+      '@/*': './src/*',
+      '@/components': './src/components',
     }
   }
-
 
   return config;
 };
